@@ -9,24 +9,30 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class UsuarioBO {
-    UsuarioDAO usuarioDao;
+    private UsuarioDAO usuarioDao;
 
-    public boolean login(String nome, String senha) throws SQLException {
-        String sql = "SELECT 1 FROM usuarios WHERE nome = ? AND senha = ?";
+    public UsuarioBO() throws SQLException, ClassNotFoundException {
+        usuarioDao = new UsuarioDAO();
+    }
+
+    public boolean login(String email, String senha) throws SQLException {
+        String sql = "SELECT 1 FROM usuarios WHERE email = ? AND senha = ?";
 
         try (PreparedStatement stmt = usuarioDao.minhaConexao.prepareStatement(sql)) {
-            stmt.setString(1, nome);
+            stmt.setString(1, email);
             stmt.setString(2, senha);
+
             try (ResultSet rs = stmt.executeQuery()) {
-                return rs.next();
+                return rs.next(); // Retorna true se existir registro com esse nome e senha
             }
         }
     }
 
-    public ArrayList<Usuario> selecionarBo() throws ClassNotFoundException, SQLException {
-        usuarioDao = new UsuarioDAO();
+    public ArrayList<Usuario> selecionarBo() throws SQLException, ClassNotFoundException {
         return (ArrayList<Usuario>) usuarioDao.selecionar();
     }
 
-
+    public String inserirBo(Usuario usuario) throws SQLException, ClassNotFoundException {
+        return usuarioDao.inserir(usuario);
+    }
 }

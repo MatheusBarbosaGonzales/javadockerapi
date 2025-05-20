@@ -2,7 +2,7 @@ package br.com.fiap.dto;
 
 public class LoginDTO
 {
-    public String nome;
+    public String email;
     public String senha;
 
     public LoginDTO()
@@ -10,3 +10,7 @@ public class LoginDTO
         super();
     }
 }
+
+
+
+
