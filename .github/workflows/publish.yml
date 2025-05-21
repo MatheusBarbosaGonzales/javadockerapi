@@ -19,7 +19,10 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'  # ou a versão que você usa no projeto
+          java-version: '21'  # Ajuste se sua app usar outro Java
+
+      - name: Give execute permission to mvnw
+        run: chmod +x mvnw
 
       - name: Build with Maven
         run: ./mvnw clean package -DskipTests
