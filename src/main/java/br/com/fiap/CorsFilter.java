@@ -13,15 +13,17 @@ public class CorsFilter implements ContainerResponseFilter {
 	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
 		String origin = requestContext.getHeaderString("Origin");
 
+		// Lista de origens permitidas
 		if (origin != null && (
 				origin.equals("http://localhost:3000") ||
 						origin.equals("https://subwaze-delta.vercel.app")
 		)) {
-			responseContext.getHeaders().putSingle("Access-Control-Allow-Origin", origin);
+			responseContext.getHeaders().add("Access-Control-Allow-Origin", origin);
+			responseContext.getHeaders().add("Vary", "Origin"); // IMPORTANTE!
 		}
 
 		responseContext.getHeaders().putSingle("Access-Control-Allow-Headers", "origin, content-type, accept, authorization");
 		responseContext.getHeaders().putSingle("Access-Control-Allow-Credentials", "true");
-		responseContext.getHeaders().putSingle("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
+		responseContext.getHeaders().putSingle("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
 	}
 }
