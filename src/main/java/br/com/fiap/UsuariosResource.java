@@ -33,7 +33,6 @@ public class UsuariosResource
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(LoginDTO login) throws SQLException {
         boolean existe = usuarioBO.login(login.email, login.senha);
-
         if(existe)
         {
             return Response.ok("Login bem sucedido").build();
@@ -50,8 +49,7 @@ public class UsuariosResource
     public Response criarUsuario(Usuario novoUsuario) {
         try {
             String msg = usuarioBO.inserirBo(novoUsuario);
-            return Response.status(Response.Status.CREATED)
-                    .entity(Map.of("mensagem", msg)).build();
+            return Response.status(Response.Status.CREATED).entity(Map.of("mensagem", msg)).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(Map.of("erro", e.getMessage())).build();
